@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1000
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CircleOfSand", "CircleOfSand\CircleOfSand.csproj", "{C22B6EB3-3B1A-44D3-BEA7-6452A4E5CD56}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C22B6EB3-3B1A-44D3-BEA7-6452A4E5CD56}.Debug|x86.ActiveCfg = Debug|x86
+		{C22B6EB3-3B1A-44D3-BEA7-6452A4E5CD56}.Debug|x86.Build.0 = Debug|x86
+		{C22B6EB3-3B1A-44D3-BEA7-6452A4E5CD56}.Release|x86.ActiveCfg = Release|x86
+		{C22B6EB3-3B1A-44D3-BEA7-6452A4E5CD56}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ADE65AF7-53B5-4C4D-8692-F4C7553AB25A}
+	EndGlobalSection
+EndGlobal
