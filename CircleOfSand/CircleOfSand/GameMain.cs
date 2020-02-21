@@ -11,11 +11,17 @@ namespace CircleOfSand
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
+        MainCharacter mainCharacter;
+        Texture2D textureMap;
+        Rectangle floor;
+        Vector2 vectorPositionFloor;
         public GameMain()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            floor = new Rectangle(96, 1, 16, 16);
+            vectorPositionFloor = new Vector2(0, 0);
+
         }
 
         /// <summary>
@@ -27,7 +33,10 @@ namespace CircleOfSand
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            graphics.IsFullScreen = false;
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 600;
+            graphics.ApplyChanges();
             base.Initialize();
         }
 
@@ -37,11 +46,21 @@ namespace CircleOfSand
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
+            
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            Services.AddService(typeof(SpriteBatch), spriteBatch);
+            CreateObj();
+            
         }
+
+        protected virtual void CreateObj()
+        {
+            Rectangle window = new Rectangle(5,0,760,535);
+            mainCharacter = new MainCharacter(this, Content.Load<Texture2D>("main-character-walk-frame"), new Vector2(100,100), window);
+            Components.Add(mainCharacter);
+            textureMap = Content.Load<Texture2D>("Floor");
+        }
+
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -74,10 +93,31 @@ namespace CircleOfSand
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            spriteBatch.Begin();
+            #region 
+            //while (true)
+            //{
+            //    spriteBatch.Draw(textureMap, vectorPositionFloor, floor, Color.FloralWhite, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 1);
+            //    if(vectorPositionFloor.X<Window.ClientBounds.Width)
+            //    {
+            //        vectorPositionFloor.X += 16;
+            //    }
+            //    else if(vectorPositionFloor.Y < Window.ClientBounds.Height )
+            //    {
+            //        vectorPositionFloor.Y += 16;
+            //        vectorPositionFloor.X = 0;
+            //    }
+            //    else
+            //    {
+            //        break;
+            //    }
 
-            // TODO: Add your drawing code here
-
+            //}
+            //vectorPositionFloor = new Vector2(0, 0);
+            #endregion
+            spriteBatch.Draw(textureMap, new Rectangle(0, 0, 800, 600), Color.White);
             base.Draw(gameTime);
+            spriteBatch.End();
         }
     }
 }
