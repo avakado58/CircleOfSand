@@ -11,7 +11,8 @@ namespace CircleOfSand
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        MainCharacter mainCharacter;
+        Daron daron;
+        Lidia lidia;
         Texture2D textureMap;
         Rectangle floor;
         Vector2 vectorPositionFloor;
@@ -56,8 +57,10 @@ namespace CircleOfSand
         protected virtual void CreateObj()
         {
             Rectangle window = new Rectangle(5,0,760,535);
-            mainCharacter = new MainCharacter(this, Content.Load<Texture2D>("main-character-walk-frame"), new Vector2(100,100), window);
-            Components.Add(mainCharacter);
+            daron = new Daron(this, Content.Load<Texture2D>("main-character-walk-frame"), new Vector2(100,100), window);
+            lidia = new Lidia(this, Content.Load<Texture2D>("main-character-walk-frame"), new Vector2(300, 100), window);
+            Components.Add(lidia);
+            Components.Add(daron);
             textureMap = Content.Load<Texture2D>("Floor");
         }
 
