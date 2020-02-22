@@ -41,6 +41,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Blast.cs" />
     <Compile Include="CompDraw.cs" />
     <Compile Include="Daron.cs" />
     <Compile Include="GameMain.cs" />

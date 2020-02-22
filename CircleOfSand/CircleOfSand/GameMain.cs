@@ -11,13 +11,14 @@ namespace CircleOfSand
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Daron daron;
-        Lidia lidia;
+        //Daron daron;
+        //Lidia lidia;
         Texture2D textureMap;
         Rectangle floor;
         Vector2 vectorPositionFloor;
         CompDraw compDraw1;
         CompDraw compDraw2;
+        Blast blast;
         Rectangle window;
         public GameMain()
         {
@@ -40,6 +41,7 @@ namespace CircleOfSand
             graphics.IsFullScreen = false;
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 600;
+            this.IsMouseVisible = true;
             graphics.ApplyChanges();
             base.Initialize();
         }
@@ -59,15 +61,29 @@ namespace CircleOfSand
 
         protected virtual void CreateObj()
         {
+            Rectangle[] rectanglesBlast = new Rectangle[]
+            {
+                new Rectangle(13,14,19,18),
+                new Rectangle(50,7,31,28),
+                new Rectangle(90,4,38,36),
+                new Rectangle(131,0,42,43),
+                new Rectangle(173,0,43,42),
+                new Rectangle(1,45,44,41),
+                new Rectangle(47,47,40,39),
+                new Rectangle(101,62,27,11)
+            };
             window = new Rectangle(5,0,760,535);
+            Texture2D textureBlast = Content.Load<Texture2D>("blast");
             //daron = new Daron(this, Content.Load<Texture2D>("main-character-walk-frame"), new Vector2(100,100), window);
             //lidia = new Lidia(this, Content.Load<Texture2D>("main-character-walk-frame"), new Vector2(300, 100), window);
             //Components.Add(lidia);
             //Components.Add(daron);
             compDraw1 = new CompDraw(this, Content.Load<Texture2D>("male"),new Vector2(100,100),new Rectangle(0,0,23,50));
             compDraw2 = new CompDraw(this, Content.Load<Texture2D>("female"), new Vector2(100, 200), new Rectangle(1,0,25,48));
+            blast = new Blast(this, ref textureBlast, rectanglesBlast, compDraw1.position);
             Components.Add(compDraw1);
             Components.Add(compDraw2);
+            Components.Add(blast);
             textureMap = Content.Load<Texture2D>("Floor");
         }
 
@@ -111,6 +127,8 @@ namespace CircleOfSand
                 {
                     compDraw.position.Y -= 5;
                 }
+                blast.beginPositionBlast = compDraw.position;
+                blast.positionBlast= compDraw.position;
             }
 
         }
@@ -122,7 +140,10 @@ namespace CircleOfSand
                 {
                     compDraw.position.Y += 5;
                 }
+                blast.beginPositionBlast = compDraw.position;
+                blast.positionBlast = compDraw.position;
             }
+            
         }
         private void MoveLeft(CompDraw compDraw, Keys keys)
         {
@@ -133,6 +154,8 @@ namespace CircleOfSand
                 {
                     compDraw.position.X -= 5;
                 }
+                blast.beginPositionBlast = compDraw.position;
+                blast.positionBlast = compDraw.position;
             }
         }
         private void MoveRight(CompDraw compDraw, Keys keys)
@@ -143,6 +166,8 @@ namespace CircleOfSand
                 {
                     compDraw.position.X += 5;
                 }
+                blast.beginPositionBlast = compDraw.position;
+                blast.positionBlast = compDraw.position;
             }
         }
 
