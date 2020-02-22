@@ -16,6 +16,9 @@ namespace CircleOfSand
         Texture2D textureMap;
         Rectangle floor;
         Vector2 vectorPositionFloor;
+        CompDraw compDraw1;
+        CompDraw compDraw2;
+        Rectangle window;
         public GameMain()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -56,11 +59,15 @@ namespace CircleOfSand
 
         protected virtual void CreateObj()
         {
-            Rectangle window = new Rectangle(5,0,760,535);
-            daron = new Daron(this, Content.Load<Texture2D>("main-character-walk-frame"), new Vector2(100,100), window);
-            lidia = new Lidia(this, Content.Load<Texture2D>("main-character-walk-frame"), new Vector2(300, 100), window);
-            Components.Add(lidia);
-            Components.Add(daron);
+            window = new Rectangle(5,0,760,535);
+            //daron = new Daron(this, Content.Load<Texture2D>("main-character-walk-frame"), new Vector2(100,100), window);
+            //lidia = new Lidia(this, Content.Load<Texture2D>("main-character-walk-frame"), new Vector2(300, 100), window);
+            //Components.Add(lidia);
+            //Components.Add(daron);
+            compDraw1 = new CompDraw(this, Content.Load<Texture2D>("male"),new Vector2(100,100),new Rectangle(0,0,23,50));
+            compDraw2 = new CompDraw(this, Content.Load<Texture2D>("female"), new Vector2(100, 200), new Rectangle(1,0,25,48));
+            Components.Add(compDraw1);
+            Components.Add(compDraw2);
             textureMap = Content.Load<Texture2D>("Floor");
         }
 
@@ -83,11 +90,62 @@ namespace CircleOfSand
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            MoveUp(compDraw1, Keys.W);
+            MoveDown(compDraw1, Keys.S);
+            MoveLeft(compDraw1, Keys.A);
+            MoveRight(compDraw1, Keys.D);
 
-            // TODO: Add your update logic here
-
+            MoveUp(compDraw2, Keys.Up);
+            MoveDown(compDraw2, Keys.Down);
+            MoveLeft(compDraw2, Keys.Left);
+            MoveRight(compDraw2, Keys.Right);
             base.Update(gameTime);
         }
+
+
+        private void MoveUp(CompDraw compDraw, Keys keys)
+        {
+            if (Keyboard.GetState().IsKeyDown(keys))
+            {
+                if (compDraw.position.Y > window.Top)
+                {
+                    compDraw.position.Y -= 5;
+                }
+            }
+
+        }
+        private void MoveDown(CompDraw compDraw, Keys keys)
+        {
+            if (Keyboard.GetState().IsKeyDown(keys))
+            {
+                if (compDraw.position.Y < window.Bottom)
+                {
+                    compDraw.position.Y += 5;
+                }
+            }
+        }
+        private void MoveLeft(CompDraw compDraw, Keys keys)
+        {
+
+            if (Keyboard.GetState().IsKeyDown(keys))
+            {
+                if (compDraw.position.X > window.Left)
+                {
+                    compDraw.position.X -= 5;
+                }
+            }
+        }
+        private void MoveRight(CompDraw compDraw, Keys keys)
+        {
+            if (Keyboard.GetState().IsKeyDown(keys))
+            {
+                if (compDraw.position.X < window.Right)
+                {
+                    compDraw.position.X += 5;
+                }
+            }
+        }
+
 
         /// <summary>
         /// This is called when the game should draw itself.
