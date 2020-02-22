@@ -80,7 +80,7 @@ namespace CircleOfSand
                 if (PositionMainCharacter.Y > window.Top)
                 {
                     PositionMainCharacter.Y -= 5;
-                    if (iterUpFrame < 2)
+                    if (iterUpFrame < upFrameOfTextureMC.Length-1)
                     {
                         iterUpFrame++;
                     }
@@ -100,7 +100,7 @@ namespace CircleOfSand
                 if (PositionMainCharacter.Y < window.Bottom)
                 {
                     PositionMainCharacter.Y += 5;
-                    if (iterDownFrame < 2)
+                    if (iterDownFrame < downFrameOfTextureMC.Length-1)
                     {
                         iterDownFrame++;
                     }
@@ -121,7 +121,7 @@ namespace CircleOfSand
                 {
                     walkingDirection = WalkingDirection.Left;
                     PositionMainCharacter.X -= 5;
-                    if (iterLeftFrame < 2)
+                    if (iterLeftFrame < leftFrameOfTextureMC.Length-1)
                     {
                         iterLeftFrame++;
                     }
@@ -142,7 +142,7 @@ namespace CircleOfSand
                 {
                     walkingDirection = WalkingDirection.Right;
                     PositionMainCharacter.X += 5;
-                    if (iterRightFrame < 2)
+                    if (iterRightFrame < rightFrameOfTextureMC.Length-1)
                     {
                         iterRightFrame++;
                     }
