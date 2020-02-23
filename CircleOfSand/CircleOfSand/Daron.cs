@@ -22,10 +22,7 @@ namespace CircleOfSand
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            MoveDown(Keys.S);
-            MoveUp(Keys.W);
-            MoveLeft(Keys.A);
-            MoveRight(Keys.D);
+
         }
     }
 }

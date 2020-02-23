@@ -42,6 +42,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Bat.cs" />
+    <Compile Include="ChangeDirectionEventArgs.cs" />
+    <Compile Include="Control.cs" />
     <Compile Include="Daron.cs" />
     <Compile Include="GameMain.cs" />
     <Compile Include="Lidia.cs" />

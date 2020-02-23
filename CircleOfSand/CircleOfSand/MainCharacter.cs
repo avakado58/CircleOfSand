@@ -5,38 +5,53 @@ using Microsoft.Xna.Framework.Input;
 
 namespace CircleOfSand
 {
-    class MainCharacter:DrawableGameComponent
+    enum WalkingDirection
     {
-        protected enum WalkingDirection
-        {
-            Up=0,
-            Down=1,
-            Left=2,
-            Right=3
-        }
-        public Vector2 PositionMainCharacter;
+        Up = 0,
+        Down = 1,
+        Left = 2,
+        Right = 3
+    }
+    abstract class MainCharacter:DrawableGameComponent
+    {
+        public delegate void DelegateForEvet(object sender, ChangeDirectionEventArgs e);
+        public event DelegateForEvet ChangePosition;
+        public int NumberSpriteForAnimation => upFrameOfTextureMC.Length - 1;
+        public Vector2 Position;
         protected Texture2D textureMainCharacter;
         protected  Rectangle[] upFrameOfTextureMC;//MC - MainCharacter
         protected  Rectangle[] downFrameOfTextureMC;
         protected  Rectangle[] leftFrameOfTextureMC;
         protected  Rectangle[] rightFrameOfTextureMC;
         public Rectangle sizeOfSprite;
-        protected int iterUpFrame = 0;
-        protected int iterDownFrame = 0;
-        protected int iterRightFrame=0;
-        protected int iterLeftFrame = 0;
+        public int IterUpFrame { get; set; } = 0;
+        public int IterDownFrame { get; set; } = 0;
+        public int IterRightFrame { get; set; }  = 0;
+        public int IterLeftFrame { get; set; } = 0;
         protected Rectangle window;
-        protected WalkingDirection walkingDirection;
+        public WalkingDirection walkingDirection;
 
         public MainCharacter(Game game, Texture2D texture, Vector2 beginPosition, Rectangle window): base(game)
         {
             textureMainCharacter = texture;
-            PositionMainCharacter = beginPosition;
+            Position = beginPosition;
             this.window = window;
             walkingDirection = WalkingDirection.Right;
             RectangleInitialize();
             sizeOfSprite = new Rectangle(0, 0, upFrameOfTextureMC[0].Width, upFrameOfTextureMC[0].Height);
+            this.ChangePosition += MainCharacter_ChangePosition;
+
         }
+
+        private void MainCharacter_ChangePosition(object sender, ChangeDirectionEventArgs e)
+        {
+            IterUpFrame = e.IterUpFrame;
+            IterDownFrame = e.IterDownFrame;
+            IterLeftFrame = e.IterLeftFrame;
+            IterRightFrame = e.IterRightFrame;
+            walkingDirection = e.WalkingDirection;
+        }
+
         protected virtual void RectangleInitialize()
         {
             upFrameOfTextureMC = new Rectangle[] {
@@ -79,16 +94,16 @@ namespace CircleOfSand
             if (Keyboard.GetState().IsKeyDown(keys))
             {
                 walkingDirection = WalkingDirection.Up;
-                if (PositionMainCharacter.Y > window.Top)
+                if (Position.Y > window.Top)
                 {
-                    PositionMainCharacter.Y -= 5;
-                    if (iterUpFrame < upFrameOfTextureMC.Length-1)
+                    Position.Y -= 5;
+                    if (IterUpFrame < upFrameOfTextureMC.Length-1)
                     {
-                        iterUpFrame++;
+                        IterUpFrame++;
                     }
                     else
                     {
-                        iterUpFrame = 0;
+                        IterUpFrame = 0;
                     }
                 }
 
@@ -99,16 +114,16 @@ namespace CircleOfSand
             if (Keyboard.GetState().IsKeyDown(keys))
             {
                 walkingDirection = WalkingDirection.Down;
-                if (PositionMainCharacter.Y < window.Bottom)
+                if (Position.Y < window.Bottom)
                 {
-                    PositionMainCharacter.Y += 5;
-                    if (iterDownFrame < downFrameOfTextureMC.Length-1)
+                    Position.Y += 5;
+                    if (IterDownFrame < downFrameOfTextureMC.Length-1)
                     {
-                        iterDownFrame++;
+                        IterDownFrame++;
                     }
                     else
                     {
-                        iterDownFrame = 0;
+                        IterDownFrame = 0;
                     }
                 }
 
@@ -119,17 +134,17 @@ namespace CircleOfSand
             if (Keyboard.GetState().IsKeyDown(keys))
             {
 
-                if (PositionMainCharacter.X > window.Left)
+                if (Position.X > window.Left)
                 {
                     walkingDirection = WalkingDirection.Left;
-                    PositionMainCharacter.X -= 5;
-                    if (iterLeftFrame < leftFrameOfTextureMC.Length-1)
+                    Position.X -= 5;
+                    if (IterLeftFrame < leftFrameOfTextureMC.Length-1)
                     {
-                        iterLeftFrame++;
+                        IterLeftFrame++;
                     }
                     else
                     {
-                        iterLeftFrame = 0;
+                        IterLeftFrame = 0;
                     }
                 }
 
@@ -140,17 +155,17 @@ namespace CircleOfSand
             if (Keyboard.GetState().IsKeyDown(keys))
             {
 
-                if (PositionMainCharacter.X < window.Right)
+                if (Position.X < window.Right)
                 {
                     walkingDirection = WalkingDirection.Right;
-                    PositionMainCharacter.X += 5;
-                    if (iterRightFrame < rightFrameOfTextureMC.Length-1)
+                    Position.X += 5;
+                    if (IterRightFrame < rightFrameOfTextureMC.Length-1)
                     {
-                        iterRightFrame++;
+                        IterRightFrame++;
                     }
                     else
                     {
-                        iterRightFrame = 0;
+                        IterRightFrame = 0;
                     }
                 }
 
@@ -163,16 +178,16 @@ namespace CircleOfSand
             switch(walkingDirection)
             {
                 case WalkingDirection.Up:
-                    spriteBatch.Draw(textureMainCharacter, PositionMainCharacter, upFrameOfTextureMC[iterUpFrame], Color.White);
+                    spriteBatch.Draw(textureMainCharacter, Position, upFrameOfTextureMC[IterUpFrame], Color.White);
                     break;
                 case WalkingDirection.Down:
-                    spriteBatch.Draw(textureMainCharacter, PositionMainCharacter, downFrameOfTextureMC[iterDownFrame], Color.White);
+                    spriteBatch.Draw(textureMainCharacter, Position, downFrameOfTextureMC[IterDownFrame], Color.White);
                     break;
                 case WalkingDirection.Left:
-                    spriteBatch.Draw(textureMainCharacter, PositionMainCharacter, leftFrameOfTextureMC[iterLeftFrame], Color.White);
+                    spriteBatch.Draw(textureMainCharacter, Position, leftFrameOfTextureMC[IterLeftFrame], Color.White);
                     break;
                 case WalkingDirection.Right:
-                    spriteBatch.Draw(textureMainCharacter, PositionMainCharacter, rightFrameOfTextureMC[iterRightFrame], Color.White);
+                    spriteBatch.Draw(textureMainCharacter, Position, rightFrameOfTextureMC[IterRightFrame], Color.White);
                     break;
             }
             

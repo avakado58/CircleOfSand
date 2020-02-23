@@ -11,6 +11,8 @@ namespace CircleOfSand
 {
     class Lidia:MainCharacter
     {
+        
+
         public Lidia(Game game, Texture2D texture, Vector2 beginPosition, Rectangle window) : base(game, texture, beginPosition, window)
         {
 
@@ -22,10 +24,7 @@ namespace CircleOfSand
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            MoveDown(Keys.Down);
-            MoveUp(Keys.Up);
-            MoveLeft(Keys.Left);
-            MoveRight(Keys.Right);
+
         }
     }
 }

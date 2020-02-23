@@ -12,12 +12,11 @@ namespace CircleOfSand
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Daron daron;
-        Lidia lidia;
         Texture2D textureMap;
         Rectangle floor;
         Vector2 vectorPositionFloor;
         Random random = new Random();
+        Control control;
         public GameMain()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -53,23 +52,23 @@ namespace CircleOfSand
             
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Services.AddService(typeof(SpriteBatch), spriteBatch);
+            textureMap = Content.Load<Texture2D>("Floor");
+            
             CreateObj();
             
         }
 
         protected virtual void CreateObj()
         {
-            Rectangle window = new Rectangle(5,0,760,535);
-            daron = new Daron(this, Content.Load<Texture2D>("main-character-walk-frame"), new Vector2(100,100), window);
-            lidia = new Lidia(this, Content.Load<Texture2D>("main-character-walk-frame"), new Vector2(300, 100), window);
+            
             Texture2D textureForBat = Content.Load<Texture2D>("textureForBat");
             for (int i = 0; i <random.Next(3,50) ; i++)
             {
                 Components.Add(new Bat(this, ref textureForBat, i));
             }
-            Components.Add(lidia);
-            Components.Add(daron);
-            textureMap = Content.Load<Texture2D>("Floor");
+            control = new Control(this);
+            Components.Add(control);
+
         }
 
 
