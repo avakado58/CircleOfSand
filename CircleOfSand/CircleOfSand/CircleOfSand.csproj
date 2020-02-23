@@ -41,6 +41,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Bat.cs" />
     <Compile Include="Daron.cs" />
     <Compile Include="GameMain.cs" />
     <Compile Include="Lidia.cs" />
