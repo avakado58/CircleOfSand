@@ -24,6 +24,7 @@ namespace CircleOfSand
             Content.RootDirectory = "Content";
             floor = new Rectangle(96, 1, 16, 16);
             vectorPositionFloor = new Vector2(0, 0);
+            TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 50);
 
         }
 
@@ -62,9 +63,9 @@ namespace CircleOfSand
             daron = new Daron(this, Content.Load<Texture2D>("main-character-walk-frame"), new Vector2(100,100), window);
             lidia = new Lidia(this, Content.Load<Texture2D>("main-character-walk-frame"), new Vector2(300, 100), window);
             Texture2D textureForBat = Content.Load<Texture2D>("textureForBat");
-            for (int i = 0; i <random.Next(3,6) ; i++)
+            for (int i = 0; i <random.Next(3,50) ; i++)
             {
-                Components.Add(new Bat(this, ref textureForBat, new Rectangle(66,6,29,15), i));
+                Components.Add(new Bat(this, ref textureForBat, i));
             }
             Components.Add(lidia);
             Components.Add(daron);
