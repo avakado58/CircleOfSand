@@ -44,6 +44,7 @@
     <Compile Include="Bird.cs" />
     <Compile Include="Blast.cs" />
     <Compile Include="CompDraw.cs" />
+    <Compile Include="Control.cs" />
     <Compile Include="Daron.cs" />
     <Compile Include="GameMain.cs" />
     <Compile Include="Lidia.cs" />
