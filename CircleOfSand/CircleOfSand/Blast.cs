@@ -13,10 +13,6 @@ namespace CircleOfSand
     }
     class Blast : DrawableGameComponent
     {
-        int pX;
-        int pY;
-        int pBX;
-        int pBY;
 
         Texture2D textureBlast;
         bool isLeftButtonPres = false;
