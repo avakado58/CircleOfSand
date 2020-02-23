@@ -20,6 +20,7 @@ namespace CircleOfSand
         protected  Rectangle[] downFrameOfTextureMC;
         protected  Rectangle[] leftFrameOfTextureMC;
         protected  Rectangle[] rightFrameOfTextureMC;
+        public Rectangle sizeOfSprite;
         protected int iterUpFrame = 0;
         protected int iterDownFrame = 0;
         protected int iterRightFrame=0;
@@ -34,6 +35,7 @@ namespace CircleOfSand
             this.window = window;
             walkingDirection = WalkingDirection.Right;
             RectangleInitialize();
+            sizeOfSprite = new Rectangle(0, 0, upFrameOfTextureMC[0].Width, upFrameOfTextureMC[0].Height);
         }
         protected virtual void RectangleInitialize()
         {
