@@ -93,18 +93,22 @@ namespace CircleOfSand
             if (positionBat.X < screenBounds.Left)
             {
                 positionBat.X = screenBounds.Left;
+                
             }
             if(positionBat.X>screenBounds.Width - rectangleSizeSprite.Width)
             {
                 positionBat.X = screenBounds.Width - rectangleSizeSprite.Width;
+                
             }
             if(positionBat.Y<screenBounds.Top)
             {
                 positionBat.Y = screenBounds.Top;
+                
             }
             if(positionBat.Y>screenBounds.Height- rectangleSizeSprite.Height)
             {
                 positionBat.Y = screenBounds.Height - rectangleSizeSprite.Height;
+                
             }
                 
         }

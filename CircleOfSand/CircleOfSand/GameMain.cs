@@ -37,6 +37,7 @@ namespace CircleOfSand
         {
             // TODO: Add your initialization logic here
             graphics.IsFullScreen = false;
+            this.IsMouseVisible = true;
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 600;
             graphics.ApplyChanges();
@@ -62,7 +63,7 @@ namespace CircleOfSand
         {
             
             Texture2D textureForBat = Content.Load<Texture2D>("textureForBat");
-            for (int i = 0; i <random.Next(3,50) ; i++)
+            for (int i = 0; i <random.Next(30,50) ; i++)
             {
                 Components.Add(new Bat(this, ref textureForBat, i));
             }
