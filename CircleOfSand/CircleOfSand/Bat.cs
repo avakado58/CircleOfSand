@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CircleOfSand
 {
-    class Bat:DrawableGameComponent
+    class Bat : DrawableGameComponent
     {
         protected enum FlyDirection
         {
@@ -32,26 +33,37 @@ namespace CircleOfSand
         protected Vector2 positionBat;
         protected Vector2 newPosition;
         protected Vector2 speed;
+        //public Rectangle SizeOfSprite { get; private set; }
         protected Random randNum;
         protected Color color;
         protected int stepNumber;
         protected FlyDirection flyDirection;
+        protected MouseState mouseState;
+        static public int CountObj { get; private set; } = 0;
         #endregion
-        public Bat(Game game, ref Texture2D textureForBat, int speed):base(game)
+        public Bat(Game game, ref Texture2D textureForBat, int speed) : base(game)
         {
-
+            CountObj++;
             textureBat = textureForBat;
             randNum = new Random(speed);
             rectangleSizeSprite = new Rectangle(0, 0, 32, 32);
             screenBounds = new Rectangle(0, 0, game.Window.ClientBounds.Width, game.Window.ClientBounds.Height);
-            positionBat.X = (float)randNum.NextDouble() * (screenBounds.Width - rectangleSizeSprite.Width);
-            positionBat.Y = (float)randNum.NextDouble() * (screenBounds.Height - rectangleSizeSprite.Height);
+            SetBeginPositions();
+            while (HoweManyClollidee()>0)
+            {
+                SetBeginPositions();
+            }
+            
             color = new Color((byte)randNum.Next(0, 256), (byte)randNum.Next(0, 256), (byte)randNum.Next(0, 256));
             InitializeRectangle();
             stepNumber = 0;
-            this.speed = new Vector2();
+            this.speed = new Vector2(5,5);
+            
+            
             flyDirection = FlyDirection.Down;
         }
+        
+
         protected virtual void InitializeRectangle()
         {
             upFrameOfTextureBat = new Rectangle[]
@@ -88,33 +100,92 @@ namespace CircleOfSand
         {
             base.Initialize();
         }
+        protected void SetBeginPositions()
+        {
+            positionBat.X = (float)randNum.NextDouble() * (screenBounds.Width - rectangleSizeSprite.Width);
+            positionBat.Y = (float)randNum.NextDouble() * (screenBounds.Height - rectangleSizeSprite.Height);
+        }
+        protected int HoweManyClollidee()
+        {
+            Bat bat;
+            int howMany = 0;
+            for (int i = 0; i < Game.Components.Count; i++)
+            {
+                if(Game.Components[i] is Bat)
+                {
+                    bat =(Bat)Game.Components[i];
+                    if(this!=bat)
+                    {
+                        if(this.batCollide(bat))
+                        {
+                            howMany++;
+                        }
+                    }
+                }
+            }
+            return howMany;
+        }
+        protected void IsSpriteCollide()
+        {
+            Bat bat;
+            for (int i = 0; i < Game.Components.Count; i++)
+            {
+                if (Game.Components[i] is Bat)
+                {
+                    bat = (Bat)Game.Components[i];
+                    if (bat !=this)
+                    {
+                        if (this.batCollide(bat))
+                        {
+                            this.speed *= -1;
+                            this.positionBat += speed;
+                        }
+                    }
+                }
+            }
+
+        }
+        protected bool batCollide(Bat bat)
+        {
+           
+            return (this.positionBat.X + this.rectangleSizeSprite.Width > bat.positionBat.X &&
+                      this.positionBat.X < bat.positionBat.X + bat.rectangleSizeSprite.Width &&
+                      this.positionBat.Y + this.rectangleSizeSprite.Height > bat.positionBat.Y &&
+                      this.positionBat.Y < bat.positionBat.Y + bat.rectangleSizeSprite.Height);
+
+        }
         protected void Check()
         {
             if (positionBat.X < screenBounds.Left)
             {
+                speed.X *= -1;
                 positionBat.X = screenBounds.Left;
-                
+
             }
             if(positionBat.X>screenBounds.Width - rectangleSizeSprite.Width)
             {
+                speed.X *= -1;
                 positionBat.X = screenBounds.Width - rectangleSizeSprite.Width;
-                
+
             }
             if(positionBat.Y<screenBounds.Top)
             {
+                speed.Y *= -1;
                 positionBat.Y = screenBounds.Top;
-                
+
             }
             if(positionBat.Y>screenBounds.Height- rectangleSizeSprite.Height)
             {
+                speed.Y *= -1;
                 positionBat.Y = screenBounds.Height - rectangleSizeSprite.Height;
-                
+
             }
                 
         }
         protected virtual void Move(GameTime gameTime)
         {
-            if(stepNumber>0)
+            #region 
+            if (stepNumber > 0)
             {
                 stepNumber--;
                 if (positionBat.X < newPosition.X)
@@ -134,7 +205,7 @@ namespace CircleOfSand
                 }
                 if (positionBat.X > newPosition.X)
                 {
-                    positionBat.X -= speed.X;
+                    positionBat.X += speed.X;
                     flyDirection = FlyDirection.Left;
                     if (iterLeftFrame < leftFrameOfTextureBat.Length - 1)
                     {
@@ -160,7 +231,7 @@ namespace CircleOfSand
                 }
                 if (positionBat.Y > newPosition.Y)
                 {
-                    positionBat.Y -= speed.Y;
+                    positionBat.Y += speed.Y;
                     flyDirection = FlyDirection.Up;
                     if (iterUpFrame < upFrameOfTextureBat.Length - 1)
                     {
@@ -171,27 +242,49 @@ namespace CircleOfSand
                         iterUpFrame = 0;
                     }
                 }
-                
+
 
             }
-            if(stepNumber==0)
+            if (stepNumber == 0)
             {
                 flyDirection = FlyDirection.Down;
-                stepNumber = randNum.Next(50, 200);
+                stepNumber = randNum.Next(10, 150);
                 newPosition.X = (float)randNum.NextDouble() * (screenBounds.Width - downFrameOfTextureBat[0].Width);
                 newPosition.Y = (float)randNum.NextDouble() * (screenBounds.Height - downFrameOfTextureBat[0].Height);
-                speed.X = randNum.Next(0, 8);
-                speed.Y = randNum.Next(0, 8);
                 color = new Color((byte)randNum.Next(0, 256), (byte)randNum.Next(0, 256), (byte)randNum.Next(0, 256));
             }
-            Check();
+            #endregion
+            //positionBat += speed;
+        }
+        protected bool IsMouseClollide()
+        {
+            return (this.positionBat.X + this.rectangleSizeSprite.Width > mouseState.X &&
+                this.positionBat.X < mouseState.X &&
+                this.positionBat.Y+this.rectangleSizeSprite.Height>mouseState.Y&&
+                this.positionBat.Y<mouseState.Y);
         }
         public override void Update(GameTime gameTime)
         {
-
+            mouseState = Mouse.GetState();
             base.Update(gameTime);
             Move(gameTime);
-
+            Check();
+            IsSpriteCollide();
+            while (HoweManyClollidee()>0)
+            {
+                IsSpriteCollide();
+            }
+            if(mouseState.LeftButton== ButtonState.Pressed)
+            {
+                if(IsMouseClollide())
+                {
+                    Game.Components.Remove(this);
+                    ((GameMain)Game).Score++;
+                    this.Dispose();
+                    
+                }
+            }
+            
         }
         public override void Draw(GameTime gameTime)
         {

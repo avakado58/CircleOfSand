@@ -17,6 +17,9 @@ namespace CircleOfSand
         Vector2 vectorPositionFloor;
         Random random = new Random();
         Control control;
+        public int CountEnemy = 10;
+        public int Score { get; set; } = 0;
+        private bool flagWin = false;
         public GameMain()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -63,9 +66,9 @@ namespace CircleOfSand
         {
             
             Texture2D textureForBat = Content.Load<Texture2D>("textureForBat");
-            for (int i = 0; i <random.Next(30,50) ; i++)
+            for (int i = 0; i < CountEnemy; i++)
             {
-                Components.Add(new Bat(this, ref textureForBat, i));
+                Components.Add(new Bat(this, ref textureForBat, i*i-(int)Math.Cos(i)));
             }
             control = new Control(this);
             Components.Add(control);
@@ -92,7 +95,16 @@ namespace CircleOfSand
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            if(Score==CountEnemy&&!flagWin)
+            {
+                Window.Title = "Победа! Прошло времени "+gameTime.TotalGameTime.ToString();
+                flagWin = true;
+            }
+            else if(Score!=CountEnemy)
+            {
+                Window.Title ="Счет "+ Score+" прошло времени "+ gameTime.TotalGameTime.ToString();
 
+            }
             base.Update(gameTime);
         }
 
