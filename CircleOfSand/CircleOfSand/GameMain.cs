@@ -97,7 +97,9 @@ namespace CircleOfSand
 
             if(Score==CountEnemy&&!flagWin)
             {
-                Window.Title = "Победа! Прошло времени "+gameTime.TotalGameTime.ToString();
+                Window.Title = "Победа! Прошло времени " + gameTime.TotalGameTime.ToString();
+               
+                
                 flagWin = true;
             }
             else if(Score!=CountEnemy)
@@ -114,29 +116,29 @@ namespace CircleOfSand
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
+            GraphicsDevice.Clear(Color.CornflowerBlue);
             #region 
-            //while (true)
-            //{
-            //    spriteBatch.Draw(textureMap, vectorPositionFloor, floor, Color.FloralWhite, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 1);
-            //    if(vectorPositionFloor.X<Window.ClientBounds.Width)
-            //    {
-            //        vectorPositionFloor.X += 16;
-            //    }
-            //    else if(vectorPositionFloor.Y < Window.ClientBounds.Height )
-            //    {
-            //        vectorPositionFloor.Y += 16;
-            //        vectorPositionFloor.X = 0;
-            //    }
-            //    else
-            //    {
-            //        break;
-            //    }
+                //while (true)
+                //{
+                //    spriteBatch.Draw(textureMap, vectorPositionFloor, floor, Color.FloralWhite, 0, Vector2.Zero, 1.1f, SpriteEffects.None, 1);
+                //    if(vectorPositionFloor.X<Window.ClientBounds.Width)
+                //    {
+                //        vectorPositionFloor.X += 16;
+                //    }
+                //    else if(vectorPositionFloor.Y < Window.ClientBounds.Height )
+                //    {
+                //        vectorPositionFloor.Y += 16;
+                //        vectorPositionFloor.X = 0;
+                //    }
+                //    else
+                //    {
+                //        break;
+                //    }
 
-            //}
-            //vectorPositionFloor = new Vector2(0, 0);
-            #endregion
+                //}
+                //vectorPositionFloor = new Vector2(0, 0);
+                #endregion
             spriteBatch.Draw(textureMap, new Rectangle(0, 0, 800, 600), Color.White);
             base.Draw(gameTime);
             spriteBatch.End();

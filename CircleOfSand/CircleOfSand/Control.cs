@@ -113,7 +113,7 @@ namespace CircleOfSand
                     //    flag = true;
                     //}
                     character.Position.Y -= 5;
-                    if (IsCollide2(lidia,daron))
+                    if (IsCollide2(lidia,daron)&&daron!=null)
                     {
                         character.Position.Y += 5;
                     }
@@ -145,7 +145,7 @@ namespace CircleOfSand
                     //    flag = true;
                     //}
                     character.Position.Y += 5;
-                    if (IsCollide2(lidia,daron))
+                    if (IsCollide2(lidia,daron) && daron != null)
                     {
                         character.Position.Y -= 5;
                     }
@@ -177,7 +177,7 @@ namespace CircleOfSand
                     //}
                     character.walkingDirection = WalkingDirection.Left;
                     character.Position.X -= 5;
-                    if (IsCollide2(lidia,daron))
+                    if (IsCollide2(lidia,daron) && daron != null)
                     {
                         character.Position.X += 5;
                     }
@@ -206,7 +206,7 @@ namespace CircleOfSand
                     //}
                     character.Position.X += 5;
                     character.walkingDirection = WalkingDirection.Right;
-                    if (IsCollide2(lidia,daron))
+                    if (IsCollide2(lidia,daron) && daron != null)
                     {
                         character.Position.X -= 5;
                     }
